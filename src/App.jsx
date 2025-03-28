@@ -33,10 +33,14 @@ function App() {
 		if (!sectionsResponse?.length)
 			return [];
 
-		return sectionsResponse.map(x => ({
-			slug: x.slug,
-			title: x.title?.rendered || "",
-			content: x.content?.rendered || ""
+		return sectionsResponse.map(section => ({
+			slug: section.slug,
+			title: section.title?.rendered || "",
+			content: section.content?.rendered || "",
+			cards: section.cards?.map(card => ({
+				title: card.title,
+				content: card.content
+			}))
 		}));
 	}
 
@@ -44,8 +48,8 @@ function App() {
 		<div>
 			{sections.length && <SectionPrimary {...sections[0]} />}
 
-			{sections?.slice(1).map(x => (
-				<Section {...x} />
+			{sections?.slice(1).map(section => (
+				<Section {...section} />
 			))}
 		</div>
 	);
