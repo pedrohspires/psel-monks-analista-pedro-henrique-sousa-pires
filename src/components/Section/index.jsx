@@ -3,7 +3,6 @@ import Card from '../Card';
 import './Section.scss';
 
 function Section({ slug, title, content, cards }) {
-    console.log(cards)
     return (
         <div className='section-container' >
             <div className='title-content-container'>

@@ -4,6 +4,7 @@ import './Card.scss'
 function Card({ title, content, imageUrl }) {
     return (
         <div className='card-container' >
+            {imageUrl && <img src={imageUrl} />}
             <div className='content'>
                 <h2>{title}</h2>
 

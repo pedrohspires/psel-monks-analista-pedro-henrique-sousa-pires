@@ -39,7 +39,8 @@ function App() {
 			content: section.content?.rendered || "",
 			cards: section.cards?.map(card => ({
 				title: card.title,
-				content: card.content
+				content: card.content,
+				imageUrl: card.image_url
 			}))
 		}));
 	}

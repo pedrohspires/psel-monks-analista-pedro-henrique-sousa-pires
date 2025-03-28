@@ -257,6 +257,93 @@ function card_section_metabox_callback($post)
     echo '</select>';
 }
 
+function add_card_image_metabox()
+{
+    add_meta_box(
+        'card_image',
+        'Imagem do Card',
+        'render_card_image_metabox',
+        'cards',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_card_image_metabox');
+
+function render_card_image_metabox($post)
+{
+    $image_url = get_post_meta($post->ID, '_card_image_url', true);
+?>
+    <div class="card-image-metabox">
+        <label for="card_image_url">Imagem do Card</label><br>
+        <input type="text" name="card_image_url" id="card_image_url" value="<?php echo esc_url($image_url); ?>" style="width: 100%;" />
+        <button class="button" id="upload_image_button">Selecionar Imagem</button>
+    </div>
+    <script>
+        jQuery(document).ready(function($) {
+            var mediaUploader;
+            $('#upload_image_button').click(function(e) {
+                e.preventDefault();
+
+                if (mediaUploader) {
+                    mediaUploader.open();
+                    return;
+                }
+
+                mediaUploader = wp.media.frames.file_frame = wp.media({
+                    title: 'Escolher Imagem',
+                    button: {
+                        text: 'Selecionar Imagem'
+                    },
+                    multiple: false
+                });
+
+                mediaUploader.on('select', function() {
+                    var attachment = mediaUploader.state().get('selection').first().toJSON();
+                    $('#card_image_url').val(attachment.url);
+                });
+                mediaUploader.open();
+            });
+        });
+    </script>
+<?php
+}
+
+function save_card_image_metabox($post_id)
+{
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
+
+    if (!current_user_can('edit_post', $post_id)) return $post_id;
+
+    if (isset($_POST['card_image_url'])) {
+        error_log('card_image_url: ' . $_POST['card_image_url']);
+        update_post_meta($post_id, '_card_image_url', sanitize_text_field($_POST['card_image_url']));
+    }
+
+    return $post_id;
+}
+add_action('save_post', 'save_card_image_metabox');
+
+function add_card_image_to_rest_api()
+{
+    register_rest_field('cards', 'card_image_url', array(
+        'get_callback'    => function ($post) {
+            $image_url = get_post_meta($post['id'], '_card_image_url', true);
+            if ($image_url) {
+                return esc_url($image_url);
+            } else {
+                return '';
+            }
+        },
+        'schema'          => array(
+            'type'        => 'string',
+            'description' => 'URL da imagem do card',
+            'context'     => array('view', 'edit')
+        )
+    ));
+}
+add_action('rest_api_init', 'add_card_image_to_rest_api');
+
 function save_card_section_relation($post_id)
 {
     if (isset($_POST['section_relation'])) {
@@ -328,12 +415,19 @@ function get_section_cards($object)
 
     $formatted_cards = [];
     foreach ($cards as $card) {
+        $thumbnail_url = get_the_post_thumbnail_url($card->ID, 'full');
+
+        $image_url = get_post_meta($card->ID, '_card_image_url', true);
+        if (!$image_url) {
+            $image_url = $thumbnail_url;
+        }
+
         $formatted_cards[] = array(
-            'id'        => $card->ID,
-            'title'     => get_the_title($card->ID),
-            'content'   => apply_filters('the_content', $card->post_content),
-            'thumbnail' => get_the_post_thumbnail_url($card->ID, 'full'),
-            'button_text' => get_post_meta($card->ID, 'card_button_text', true),
+            'id'           => $card->ID,
+            'title'        => get_the_title($card->ID),
+            'content'      => apply_filters('the_content', $card->post_content),
+            'image_url'    => $image_url,
+            'button_text'  => get_post_meta($card->ID, 'card_button_text', true),
         );
     }
 

@@ -16,7 +16,7 @@
 
 h2 {
   font-size: 1.5rem;
-  margin: 0 0 8px 0;
+  margin: 8px 0 8px 0;
 }
 
 .content-dangerously {
@@ -31,4 +31,11 @@ h2 {
 .cards-carousel-container {
   display: flex;
   gap: 24px;
+}
+
+.card-container img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
 }
