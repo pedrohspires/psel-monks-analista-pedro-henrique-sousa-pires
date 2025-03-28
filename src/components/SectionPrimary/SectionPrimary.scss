@@ -1,0 +1,26 @@
+.section-primary-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 56px;
+  padding-right: 56px;
+  border-bottom-right-radius: 32px;
+  border-bottom-left-radius: 32px;
+  color: #eae8e4;
+}
+
+h1 {
+  font-size: 3.75rem;
+}
+
+.section-primary-content {
+  max-width: 700px;
+}
+
+.section-primary-content-dangerously {
+  font-size: 24px;
+  font-weight: 100;
+}
+
+.section-primary-scroll-svg-container {
+  text-align: center;
+}

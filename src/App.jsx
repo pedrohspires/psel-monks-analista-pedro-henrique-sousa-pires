@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Section from "./components/Section";
+import SectionPrimary from "./components/SectionPrimary";
 import api from "./utils/api";
 
 function App() {
@@ -41,7 +42,9 @@ function App() {
 
 	return (
 		<div>
-			{sections?.map(x => (
+			{sections.length && <SectionPrimary {...sections[0]} />}
+
+			{sections?.slice(1).map(x => (
 				<Section {...x} />
 			))}
 		</div>
