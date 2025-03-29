@@ -128,6 +128,32 @@ function order_sections_rest_api($args, $request)
 
 add_filter('rest_sections_query', 'order_sections_rest_api', 10, 2);
 
+function add_card_section_column($columns)
+{
+    $columns['card_section'] = 'Seção Relacionada';
+    return $columns;
+}
+add_filter('manage_cards_posts_columns', 'add_card_section_column');
+
+function show_card_section_column($column, $post_id)
+{
+    if ($column === 'card_section') {
+        $section_id = get_post_meta($post_id, 'section_relation', true);
+
+        if ($section_id) {
+            $section_title = get_the_title($section_id);
+
+            if ($section_title) {
+                echo '<a href="' . esc_url(get_edit_post_link($section_id)) . '">' . esc_html($section_title) . '</a>';
+                return;
+            }
+        }
+
+        echo '-';
+    }
+}
+add_action('manage_cards_posts_custom_column', 'show_card_section_column', 10, 2);
+
 #endregion
 
 
