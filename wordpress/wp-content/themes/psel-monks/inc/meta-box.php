@@ -143,4 +143,76 @@ function save_card_image_metabox($post_id)
 }
 add_action('save_post', 'save_card_image_metabox');
 
+
+function add_section_images_metabox()
+{
+    add_meta_box(
+        'section_images',
+        'Imagens da Seção',
+        'render_section_images_metabox',
+        'sections', // Aplicado ao post type "sections"
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_section_images_metabox');
+
+function render_section_images_metabox($post)
+{
+    // Obtém os URLs das imagens salvas
+    $images = get_post_meta($post->ID, '_section_images', true);
+    if (!is_array($images)) {
+        $images = ['', '', '']; // Garante que sempre existam 3 espaços
+    }
+?>
+    <div class="section-images-metabox">
+        <?php for ($i = 0; $i < 3; $i++) : ?>
+            <div class="section-image">
+                <label for="section_image_<?php echo $i; ?>">Imagem <?php echo $i + 1; ?></label><br>
+                <input type="text" name="section_images[]" id="section_image_<?php echo $i; ?>" value="<?php echo esc_url($images[$i] ?? ''); ?>" style="width: 100%;" />
+                <button class="button upload_image_button" data-input="section_image_<?php echo $i; ?>">Selecionar Imagem</button>
+            </div>
+        <?php endfor; ?>
+    </div>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('.upload_image_button').click(function(e) {
+                e.preventDefault();
+
+                var button = $(this);
+                var inputField = $('#' + button.data('input'));
+
+                var mediaUploader = wp.media({
+                    title: 'Escolher Imagem',
+                    button: {
+                        text: 'Selecionar Imagem'
+                    },
+                    multiple: false
+                });
+
+                mediaUploader.on('select', function() {
+                    var attachment = mediaUploader.state().get('selection').first().toJSON();
+                    inputField.val(attachment.url);
+                });
+
+                mediaUploader.open();
+            });
+        });
+    </script>
+<?php
+}
+
+function save_section_images_metabox($post_id)
+{
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    if (isset($_POST['section_images'])) {
+        $images = array_map('sanitize_text_field', $_POST['section_images']);
+        update_post_meta($post_id, '_section_images', $images);
+    }
+}
+add_action('save_post', 'save_section_images_metabox');
+
 #endregion

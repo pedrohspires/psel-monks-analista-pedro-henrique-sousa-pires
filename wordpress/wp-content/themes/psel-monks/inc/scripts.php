@@ -178,6 +178,30 @@ function add_card_image_to_rest_api()
 }
 add_action('rest_api_init', 'add_card_image_to_rest_api');
 
+function add_section_images_to_rest_api()
+{
+    register_rest_field('sections', 'section_images', array(
+        'get_callback'    => function ($post) {
+            $images = get_post_meta($post['id'], '_section_images', true);
+
+            if (!is_array($images)) {
+                return [];
+            }
+
+            return array_map('esc_url', $images);
+        },
+        'schema'          => array(
+            'type'        => 'array',
+            'description' => 'URLs das imagens da seção',
+            'context'     => array('view', 'edit'),
+            'items'       => array(
+                'type' => 'string'
+            )
+        )
+    ));
+}
+add_action('rest_api_init', 'add_section_images_to_rest_api');
+
 #endregion
 
 
