@@ -23,32 +23,49 @@ function App() {
 		if (response.status !== 200)
 			setLoading(false);
 
-		const sectionsFormated = getSectionsFormated(response);
+		const sectionsFormated = await getSectionsFormated(response);
 		setSections(sectionsFormated);
 	}
 
-	function getSectionsFormated(response) {
+	async function getSectionsFormated(response) {
 		const sectionsResponse = response.data;
 
 		if (!sectionsResponse?.length)
 			return [];
 
-		return sectionsResponse.map(section => ({
-			slug: section.slug,
-			title: section.title?.rendered || "",
-			content: section.content?.rendered || "",
-			cards: section.cards?.map(card => ({
-				title: card.title,
-				content: card.content,
-				imageUrl: card.image_url
-			})),
-			sectionImages: section.section_images
-		}));
+		const sectionsFormated = [];
+		for (let section of sectionsResponse) {
+			sectionsFormated.push({
+				slug: section.slug,
+				title: section.title?.rendered || "",
+				content: section.content?.rendered || "",
+				cards: section.cards?.map(card => ({
+					title: card.title,
+					content: card.content,
+					imageUrl: card.image_url,
+					textBtn: card.button_text
+				})),
+				sectionImages: section.section_images,
+				categories: await getCategories(section)
+			})
+		}
+
+		return sectionsFormated;
+	}
+
+	async function getCategories(section) {
+		if (section.slug == "section_categories") {
+			const response = await api.get('/wp-json/wp/v2/categories');
+			if (response.status == 200)
+				return response.data.map(category => category.name);
+		}
+
+		return [];
 	}
 
 	return (
 		<div>
-			{sections.length && <SectionPrimary {...sections[0]} />}
+			{sections?.length && <SectionPrimary {...sections[0]} />}
 
 			{sections?.slice(1).map((section, index) => (
 				<Section key={index + "_" + section.title} {...section} />

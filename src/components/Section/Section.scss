@@ -76,3 +76,30 @@ h2 {
   scale: crop;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
+
+.categories-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 80%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.categories-item {
+  border: 1px;
+  border-radius: 32px;
+  border-color: #7d26c9;
+  color: #7d26c9;
+  padding: 8px 40px;
+  border-style: solid;
+  font-weight: 600;
+  line-height: 30px;
+  font-size: 20px;
+  background-color: #dfdcd5;
+}
+
+.cards-container {
+  display: flex;
+  gap: 40px;
+}
