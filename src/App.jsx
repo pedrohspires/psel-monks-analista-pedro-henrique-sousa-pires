@@ -41,7 +41,8 @@ function App() {
 				title: card.title,
 				content: card.content,
 				imageUrl: card.image_url
-			}))
+			})),
+			sectionImages: section.section_images
 		}));
 	}
 
@@ -49,8 +50,8 @@ function App() {
 		<div>
 			{sections.length && <SectionPrimary {...sections[0]} />}
 
-			{sections?.slice(1).map(section => (
-				<Section {...section} />
+			{sections?.slice(1).map((section, index) => (
+				<Section key={index + "_" + section.title} {...section} />
 			))}
 		</div>
 	);
