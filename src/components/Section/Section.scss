@@ -20,7 +20,6 @@
 
 h2 {
   font-size: 1.5rem;
-  margin: 8px 0 8px 0;
 }
 
 .content-dangerously {
@@ -63,4 +62,17 @@ h2 {
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.app-links-container {
+  max-width: 200px;
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+}
+
+.app-links-container img {
+  max-width: 100%;
+  scale: crop;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
