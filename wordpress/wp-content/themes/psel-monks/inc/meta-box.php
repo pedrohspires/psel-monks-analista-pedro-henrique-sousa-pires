@@ -150,7 +150,7 @@ function add_section_images_metabox()
         'section_images',
         'Imagens da Seção',
         'render_section_images_metabox',
-        'sections', // Aplicado ao post type "sections"
+        'sections',
         'normal',
         'high'
     );
@@ -159,10 +159,9 @@ add_action('add_meta_boxes', 'add_section_images_metabox');
 
 function render_section_images_metabox($post)
 {
-    // Obtém os URLs das imagens salvas
     $images = get_post_meta($post->ID, '_section_images', true);
     if (!is_array($images)) {
-        $images = ['', '', '']; // Garante que sempre existam 3 espaços
+        $images = ['', '', ''];
     }
 ?>
     <div class="section-images-metabox">
@@ -214,5 +213,37 @@ function save_section_images_metabox($post_id)
     }
 }
 add_action('save_post', 'save_section_images_metabox');
+
+#endregion
+
+
+#region CONTACTS METABOXES
+
+function add_custom_meta_boxes()
+{
+    add_meta_box(
+        'contact_details',
+        'Detalhes do Contato',
+        'render_contact_meta_box',
+        'contact',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_custom_meta_boxes');
+
+function render_contact_meta_box($post)
+{
+    $phone_number = get_post_meta($post->ID, 'phone_number', true);
+    $email = get_post_meta($post->ID, 'email', true);
+
+?>
+    <label for="phone_number">Número de telefone:</label>
+    <input type="text" id="phone_number" name="phone_number" value="<?php echo esc_attr($phone_number); ?>" class="widefat" />
+
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" value="<?php echo esc_attr($email); ?>" class="widefat" />
+<?php
+}
 
 #endregion

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Section from "./components/Section";
+import SectionForm from "./components/SectionForm";
 import SectionPrimary from "./components/SectionPrimary";
 import api from "./utils/api";
 
@@ -20,8 +21,10 @@ function App() {
 
 	async function getSections() {
 		const response = await api.get('/wp-json/wp/v2/sections');
-		if (response.status !== 200)
+		if (response.status !== 200) {
 			setLoading(false);
+			return;
+		}
 
 		const sectionsFormated = await getSectionsFormated(response);
 		setSections(sectionsFormated);
@@ -65,11 +68,13 @@ function App() {
 
 	return (
 		<div>
-			{sections?.length && <SectionPrimary {...sections[0]} />}
+			{sections?.length && <SectionPrimary {...sections.find(x => x.slug == "section_primary")} />}
 
-			{sections?.slice(1).map((section, index) => (
+			{sections?.filter(section => section.slug !== "section_primary" && section.slug !== "section_form").map((section, index) => (
 				<Section key={index + "_" + section.title} {...section} />
 			))}
+
+			{sections?.length && <SectionForm {...sections.find(x => x.slug == "section_form")} />}
 		</div>
 	);
 }

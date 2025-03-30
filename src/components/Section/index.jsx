@@ -126,8 +126,8 @@ function Section({ slug, title, content, cards, sectionImages, categories }) {
 
             {slug == "section_categories" && (
                 <div className='categories-container'>
-                    {categories?.map(category => (
-                        <div className='categories-item'>{category}</div>
+                    {categories?.map((category, index) => (
+                        <div className='categories-item' key={index + "_" + category}>{category}</div>
                     ))}
                 </div>
             )}

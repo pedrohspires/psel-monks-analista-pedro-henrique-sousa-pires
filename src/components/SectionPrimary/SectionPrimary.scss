@@ -1,11 +1,13 @@
 .section-primary-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 56px;
-  padding-right: 56px;
+  padding-left: 80px;
+  padding-right: 80px;
   border-bottom-right-radius: 32px;
   border-bottom-left-radius: 32px;
   color: #eae8e4;
+  height: 480;
+  background-color: #2d2d2d;
 }
 
 h1 {

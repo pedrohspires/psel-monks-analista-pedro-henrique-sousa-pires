@@ -5,10 +5,7 @@ import './SectionPrimary.scss';
 function Section({ slug, title, content }) {
 
     return (
-        <div className='section-primary-container' style={{
-            height: slug == "section_primary" ? 480 : 200,
-            backgroundColor: slug == "section_primary" ? "#2D2D2D" : ""
-        }}>
+        <div className='section-primary-container' >
             <div className='section-primary-content'>
                 <NavBar />
 
