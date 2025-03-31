@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Footer from "./components/Footer";
 import Section from "./components/Section";
 import SectionForm from "./components/SectionForm";
 import SectionPrimary from "./components/SectionPrimary";
@@ -75,6 +76,21 @@ function App() {
 			))}
 
 			{sections?.length && <SectionForm {...sections.find(x => x.slug == "section_form")} />}
+
+			<div style={{
+				width: "100%",
+				paddingTop: "24px",
+				backgroundColor: "#2D2D2D",
+			}}>
+				<div style={{
+					height: "1px",
+					width: "80%",
+					margin: "0 auto",
+					backgroundColor: "#DFBBFE"
+				}} />
+			</div>
+
+			<Footer />
 		</div>
 	);
 }
