@@ -8,6 +8,7 @@
   color: #eae8e4;
   height: 480;
   background-color: #2d2d2d;
+  overflow: hidden;
 }
 
 h1 {
@@ -25,4 +26,22 @@ h1 {
 
 .section-primary-scroll-svg-container {
   text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  .section-primary-container {
+    padding: 0 24px;
+  }
+
+  .section-primary-content h1 {
+    font-size: 24px;
+  }
+
+  .section-primary-content .section-primary-content-dangerously {
+    font-size: 16px;
+  }
+
+  .section-primary-container .monks-logo-background {
+    transform: translate(-15%, 0);
+  }
 }

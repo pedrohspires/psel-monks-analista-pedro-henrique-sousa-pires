@@ -48,12 +48,14 @@ function Section({ slug, title, content, cards, sectionImages, categories }) {
     return (
         <div className={`section-container`}>
             {slug != "section_cards" && (
-                <div style={getCustomStyle()}>
-                    <div style={{
-                        flex: 1,
-                        display: slug == "section_app_links" ? "flex" : "",
-                        alignItems: slug == "section_app_links" ? "center" : ""
-                    }}>
+                <div className='images-column-container' style={getCustomStyle()}>
+                    <div
+                        style={{
+                            flex: 1,
+                            display: slug == "section_app_links" ? "flex" : "",
+                            alignItems: slug == "section_app_links" ? "center" : ""
+                        }}
+                    >
                         <div ref={refColumn1}>
                             <div
                                 style={{ marginBottom: slug == "section_app_links" ? 0 : 16 }}

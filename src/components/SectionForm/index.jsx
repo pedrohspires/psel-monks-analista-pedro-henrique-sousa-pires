@@ -89,7 +89,7 @@ function Section({ title, content }) {
 
     return (
         <div className='section-form-container'>
-            <img src='src\assets\contact.svg' />
+            <img className='contact-img' src='src\assets\contact.svg' />
 
             <div className='content'>
                 <div>
@@ -133,20 +133,22 @@ function Section({ title, content }) {
                     </div>
 
                     <div className='security-verification'>
-                        <span style={{ flex: 1 }}>Verificação de segurança</span>
+                        <span>Verificação de segurança</span>
 
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <div className='sum-container'>
-                                <span>{sumA}</span>
-                                <span style={{ color: "#2D2D2D" }}>+</span>
-                                <span>{sumB}</span>
+                        <div className='calc-container' style={{ display: "flex", alignItems: "center", gap: 32, flex: 1 }}>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <div className='sum-container'>
+                                    <span>{sumA}</span>
+                                    <span style={{ color: "#2D2D2D" }}>+</span>
+                                    <span>{sumB}</span>
+                                </div>
+                                <span className='equal' style={{ marginLeft: 32 }}>=</span>
                             </div>
-                            <span style={{ marginLeft: 32 }}>=</span>
-                        </div>
 
-                        <div className='form-group' style={{ flex: 1 }}>
-                            <input className='input-result' placeholder='Resultado*' {...register('result')} />
-                            <span className='input-result-message input-error-message'></span>
+                            <div className='form-group' style={{ flex: 1 }}>
+                                <input className='input-result' placeholder='Resultado*' {...register('result')} />
+                                <span className='input-result-message input-error-message'></span>
+                            </div>
                         </div>
                     </div>
 

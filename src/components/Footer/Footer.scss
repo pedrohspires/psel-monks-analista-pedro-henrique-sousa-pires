@@ -31,4 +31,25 @@
   gap: 40px;
   margin-top: 8px;
   font-size: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-container .infos .categories span {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 480px) {
+  .footer-container .infos .categories {
+    margin-top: 16px;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .footer-container {
+    padding: 24px;
+  }
+
+  .footer-container .infos .categories span {
+    font-size: 16px;
+  }
 }

@@ -21,7 +21,7 @@ function Section({ slug, title, content }) {
                 </div>
             </div>
 
-            <img src='src\assets\logo-monks.svg' />
+            <img className='monks-logo-background' src='src\assets\logo-monks.svg' />
         </div>
     )
 }

@@ -112,3 +112,30 @@
   font-weight: 600;
   font-size: 16px;
 }
+
+@media screen and (max-width: 480px) {
+  .section-form-container {
+    flex-flow: column;
+    padding: 32px 24px;
+  }
+
+  .section-form-container .contact-img {
+    align-self: center;
+  }
+
+  .section-form-container .content .form-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .section-form-container .security-verification {
+    flex-flow: column;
+  }
+
+  .section-form-container .security-verification .calc-container {
+    gap: 16px !important;
+  }
+
+  .section-form-container .security-verification .calc-container .equal {
+    margin-left: 16px !important;
+  }
+}
